@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Apr 2022 um 18:38
+-- Erstellungszeit: 15. Apr 2022 um 18:50
 -- Server-Version: 10.4.22-MariaDB
 -- PHP-Version: 7.3.33
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `purchase` (
   `id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `currency` varchar(255) NOT NULL,
   `amount` float NOT NULL,
   `price` decimal(10,2) NOT NULL
@@ -40,7 +40,7 @@ CREATE TABLE `purchase` (
 --
 
 INSERT INTO `purchase` (`id`, `date`, `currency`, `amount`, `price`) VALUES
-(1, '2022-04-15', 'USD', 10.494, '15.26');
+(1, '2022-04-15 00:10:00', 'BTC', 1.494, '15.26');
 
 --
 -- Indizes der exportierten Tabellen
