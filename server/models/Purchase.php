@@ -104,10 +104,15 @@ class Purchase implements DatabaseObject, JsonSerializable
      * @param $currency
      * @return array array of objects or empty array
      */
-    public static function getAllGroupByCurrency($currency = '')
+    public static function getAllGroupByCurrency($currency)
     {
-        // TODO
-        return [];
+        $db = Database::connect();
+        $sql = "SELECT * FROM purchase WHERE currency = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array($currency));
+        $items = $stmt->fetchAll(PDO::FETCH_CLASS, 'Purchase');
+        Database::disconnect();
+        return $items;
     }
 
     /**
