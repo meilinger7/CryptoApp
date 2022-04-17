@@ -1,6 +1,5 @@
 app.component('wallet-list', {
-    props: {
-    },
+    props: {},
     template:
     /*html*/
         `

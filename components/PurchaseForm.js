@@ -1,13 +1,11 @@
 app.component('purchase-form', {
-    props: {
-    },
+    props: {},
     template:
     /*html*/
         `
   `,
     data() {
-        return {
-        }
+        return {}
     },
     methods: {
 

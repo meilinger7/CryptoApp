@@ -72,7 +72,27 @@ class PurchaseRESTController extends RESTController
      */
     private function handlePUTRequest()
     {
-        // TODO
+        if ($this->verb == null && sizeof($this->args) == 1) {
+            $model = Purchase::get($this->args[0]);
+            if ($model == null) {
+                $this->response("Not found", 404);
+            } else {
+                $model->setDate($this->getDataOrNull('date'));
+                $model->setCurrency($this->getDataOrNull('currency'));
+                $model->setAmount($this->getDataOrNull('amount'));
+                $model->setPrice($this->getDataOrNull('price'));
+
+
+                if ($model->save()) {
+                    $this->response("OK");
+                } else {
+                    $this->response($model->getErrors(), 400);
+                }
+            }
+
+        } else {
+            $this->response("Not Found", 404);
+        }
     }
 
     /**

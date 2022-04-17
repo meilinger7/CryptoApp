@@ -1,14 +1,12 @@
 app.component('app-display', {
-    props: {
-    },
+    props: {},
     template:
     /*html*/
         `
+        
    `,
     data() {
-        return {
-        }
+        return {}
     },
-    methods: {
-    }
+    methods: {}
 })
