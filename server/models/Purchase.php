@@ -9,6 +9,7 @@ class Purchase implements DatabaseObject, JsonSerializable
     private $currency;
     private $amount;
     private $price;
+    private $purchase;
 
     private $errors = [];
 
@@ -36,6 +37,17 @@ class Purchase implements DatabaseObject, JsonSerializable
         return false;
     }
 
+    public function getAllByWallet($wallet_id){
+        $db = Database::connect();
+        $sql = "SELECT * FROM purchase WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array($id));
+        $item = $stmt->fetchObject('Purchase');  // ORM
+        Database::disconnect();
+        return $item !== false ? $item : null;
+    }
+
+
     /**
      * Creates a new object in the database
      * @return integer ID of the newly created object (lastInsertId)
@@ -43,7 +55,7 @@ class Purchase implements DatabaseObject, JsonSerializable
     public function create()
     {
         $db = Database::connect();
-        $sql = "INSERT INTO purchase (date, amount, price, currency) values(?, ?, ?, ?)";
+        $sql = "INSERT INTO purchase (date, amount, price, currency, wallet_id) values(?, ?, ?, ?, 1)";
         $stmt = $db->prepare($sql);
         $stmt->execute(array($this->date, $this->amount, $this->price, $this->currency));
         $lastId = $db->lastInsertId();
@@ -177,13 +189,20 @@ class Purchase implements DatabaseObject, JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
+        $data =  [
             "id" => intval($this->id),
             "date" => $this->date,
             "currency" => $this->currency,
             "amount" => doubleval($this->amount),
             "price" => doubleval($this->price),
         ];
+        
+        if ($this->purchase != null && is_object($this->purchase)) {
+            $data['purchase'] = $this->purchase;      // include object
+        }
+
+        return $data;
+
     }
 
     /**
